@@ -3,10 +3,7 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-# Enable Corepack for Yarn
-RUN corepack enable && corepack prepare yarn@stable --activate
-
-# Install dependencies
+# Install dependencies using Yarn Classic (v1) for simplicity
 COPY package.json yarn.lock* ./
 RUN yarn install --frozen-lockfile
 
@@ -24,9 +21,6 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=3000
-
-# Enable Corepack for Yarn
-RUN corepack enable && corepack prepare yarn@stable --activate
 
 # Create non-root user for security
 RUN addgroup --system --gid 1001 nodejs && \
