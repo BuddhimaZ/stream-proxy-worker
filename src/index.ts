@@ -1,7 +1,11 @@
 import { Hono } from 'hono'
 import { Buffer } from 'node:buffer';
 
-const app = new Hono<{ Bindings: CloudflareBindings }>()
+type Bindings = {
+	[key: string]: unknown
+}
+
+const app = new Hono<{ Bindings: Bindings }>()
 
 /** 
  * stream_key is a b64 encoded object that contains directUrl to the stream and referer.
@@ -34,7 +38,7 @@ app.get('/stream/:stream_key', async (c) => {
 
 		/* forward range header for video seeking */
 		const rangeHeader = c.req.header('range')
-		const fetchHeaders: HeadersInit = {
+		const fetchHeaders: Record<string, string> = {
 			'Referer': referer,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
 		}

@@ -3,14 +3,20 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
+    "dev:node": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
+    "@hono/node-server": "^1.14.4",
     "hono": "^4.11.4"
   },
   "devDependencies": {
     "@types/node": "^25.0.9",
+    "tsx": "^4.20.3",
+    "typescript": "^5.7.3",
     "wrangler": "^4.59.2"
   }
 }
